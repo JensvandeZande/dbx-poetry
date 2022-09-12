@@ -6,7 +6,7 @@ authors = ["{{cookiecutter.authors}}"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 dbx = "0.7.4"
 pyspark = "3.2.1"
 pandas = "^1.4.4"
