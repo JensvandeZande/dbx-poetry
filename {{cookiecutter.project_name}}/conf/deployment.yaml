@@ -1,0 +1,31 @@
+custom:
+  basic-cluster-props: &basic-cluster-props
+    spark_version: "10.4.x-scala2.12"
+    spark_env_vars: {"PYSPARK_PYTHON": "/databricks/python3/bin/python3"}
+
+
+  basic-static-cluster: &basic-static-cluster
+    new_cluster:
+      <<: *basic-cluster-props
+      num_workers: 1
+      node_type_id: "Standard_DS3_v2"
+
+
+build:
+   python: "poetry"
+
+environments:
+  default:
+    workflows:
+      - name: "<your-workflow-name>"
+        job_clusters:
+            - job_cluster_key: "<your-cluster-name>"
+              <<: *basic-static-cluster
+
+        tasks:
+          - task_key: "<your-task-name>"
+            job_cluster_key: "<your-cluster-name>"
+            python_wheel_task:
+              package_name: "<your-package-name>"
+              entry_point: "<your-entry-point>"
+              parameters: ["--conf-file", "file:fuse://conf/tasks/<your-configuration>.yml"]
