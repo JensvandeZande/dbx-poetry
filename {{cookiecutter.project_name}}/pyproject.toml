@@ -5,6 +5,7 @@ description = "{{cookiecutter.description}}"
 authors = ["{{cookiecutter.authors}}"]
 readme = "README.md"
 
+
 [tool.poetry.dependencies]
 python = "^3.8"
 dbx = "0.7.4"
@@ -13,6 +14,7 @@ pandas = "^1.4.4"
 pyarrow = "^9.0.0"
 delta-spark = "1.1.0"
 PyYAML = "^6.0"
+types-PyYAML = "^6.0.11"
 mlflow = "^1.28.0"
 
 
@@ -22,9 +24,16 @@ coverage = {extras = ["toml"], version = "^6.4.4"}
 pytest-cov = "^3.0.0"
 dbx = "0.7.4"
 
+
+[tool.poetry.scripts]
+
+
+[[tool.mypy.overrides]]
+module = "{{cookiecutter.project_slug}}.common"
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-
-[tool.poetry.scripts]
