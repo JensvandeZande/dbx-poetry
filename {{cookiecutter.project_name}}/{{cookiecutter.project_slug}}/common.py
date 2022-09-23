@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import yaml
 import pathlib
 from pyspark.sql import SparkSession
@@ -11,7 +11,7 @@ def get_dbutils(
     spark: SparkSession,
 ):  # please note that this function is used in mocking by its name
     try:
-        from pyspark.dbutils import DBUtils  # noqa
+        from pyspark.dbutils import DBUtils  # type: ignore # noqa
 
         if "dbutils" not in locals():
             utils = DBUtils(spark)
@@ -33,7 +33,7 @@ class Task(ABC):
     * self.conf provides access to the parsed configuration of the job
     """
 
-    def __init__(self, spark=None, init_conf=None):
+    def __init__(self, spark:Optional[SparkSession]=None, init_conf: Optional[Dict]=None):
         self.spark = self._prepare_spark(spark)
         self.logger = self._prepare_logger()
         self.dbutils = self.get_dbutils()
@@ -44,7 +44,7 @@ class Task(ABC):
         self._log_conf()
 
     @staticmethod
-    def _prepare_spark(spark) -> SparkSession:
+    def _prepare_spark(spark: SparkSession) -> SparkSession:
         if not spark:
             return SparkSession.builder.getOrCreate()
         else:
