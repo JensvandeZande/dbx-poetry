@@ -25,6 +25,7 @@ pytest-cov = "^3.0.0"
 dbx = "0.7.4"
 mypy = "^0.971"
 flake8 = "^5.0.4"
+black = "^22.8.0"
 
 [tool.poetry.scripts]
 
